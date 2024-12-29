@@ -32,7 +32,7 @@ def get_mask_card_number(card_number: str, visible_digits: int = 4, block_size: 
     # Форматируем в блоки
     formatted_number = " ".join(
         [
-            masked_number[i: i + block_size]
+            masked_number[i : i + block_size].replace("*" * block_size, "**")
             for i in range(0, len(masked_number), block_size)
         ]
     )
