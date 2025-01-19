@@ -1,22 +1,30 @@
+from datetime import datetime
 from src.masks import get_mask_account, get_mask_card_number
 
+
 def mask_account_card(info: str) -> str:
+    """
+    Обрабатывает информацию о картах и счетах, маскируя номер.
+    """
     if not isinstance(info, str):
         raise ValueError("Аргумент должен быть строкой.")
 
-        # Определяем, является ли это картой или счетом
     if info.startswith("Счет"):
-        # Извлекаем номер счета
+        # Обработка для счета
         account_number = info.split(maxsplit=1)[1]
-        return f"Счет {get_mask_account(account_number)}"
+        masked_account = get_mask_account(account_number)
+        return f"Счет {masked_account}"
     else:
-        # Извлекаем номер карты
-        *card_name, card_number = info.rsplit(maxsplit=1)
+        *card_name_list, card_number = info.rsplit(maxsplit=1)
+        card_name = " ".join(card_name_list)  # Преобразуем список в строку
         masked_card = get_mask_card_number(card_number)
-        return f"{' '.join(card_name)} {masked_card}"
-from datetime import datetime
+        return f"{card_name} {masked_card}"
+
 
 def get_date(date_string: str) -> str:
+    """
+    Преобразует дату из формата "2024-03-11T02:26:18.671407" в формат "ДД.ММ.ГГГГ".
+    """
     if not isinstance(date_string, str):
         raise ValueError("Дата должна быть строкой.")
 

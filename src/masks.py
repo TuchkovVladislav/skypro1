@@ -1,40 +1,29 @@
-def get_mask_account(account_number: str, visible_digits: int = 4) -> str:
+def get_mask_account(account_number: str) -> str:
     """
-    Маскирует номер банковского счета, показывая только последние несколько цифр.
+    Маскирует номер банковского счета, показывая только последние 4 цифры.
     """
-    if not isinstance(account_number, str):
-        raise ValueError("Номер счета должен быть строкой.")
-    if len(account_number) <= visible_digits:
-        return account_number  # Если номер короче или равен видимым цифрам, возвращаем его полностью
+    if len(account_number) < 4:
+        raise ValueError("Номер счета должен быть не менее 4 символов.")
 
-    mask_length = len(account_number) - visible_digits
-    masked_part = "*" * mask_length
-    visible_part = account_number[-visible_digits:]
-    return f"{masked_part}{visible_part}"
+    # Берем последние 4 цифры
+    last_four_digits = account_number[-4:]
+
+    # Возвращаем замаскированный номер
+    return f"**{last_four_digits}"
 
 
-def get_mask_card_number(card_number: str, visible_digits: int = 4, block_size: int = 4) -> str:
+def get_mask_card_number(card_number: str) -> str:
     """
-    Маскирует номер банковской карты, оставляя только последние цифры и форматируя блоками.
+    Маскирует номер банковской карты, оставляя первые 4, 2 символа в середине,
+    и последние 4 цифры, форматируя блоками.
     """
-    if not isinstance(card_number, str):
-        raise ValueError("Номер карты должен быть строкой.")
-    if len(card_number) <= visible_digits:
-        return card_number  # Если номер короче или равен видимым цифрам, возвращаем его полностью
+    if len(card_number) < 16:
+        raise ValueError("Номер карты должен быть не менее 16 символов.")
 
-    mask_length = len(card_number) - visible_digits
-    masked_part = "*" * mask_length
-    visible_part = card_number[-visible_digits:]
+    # Разбиваем номер на части
+    first_four = card_number[:4]
+    fifth_and_sixth = card_number[4:6]
+    last_four = card_number[-4:]
 
-    # Создаем маскированную строку
-    masked_number = masked_part + visible_part
-
-    # Форматируем в блоки
-    formatted_number = " ".join(
-        [
-            masked_number[i : i + block_size].replace("*" * block_size, "**")
-            for i in range(0, len(masked_number), block_size)
-        ]
-    )
-
-    return formatted_number
+    # Возвращаем замаскированный номер в формате блоков
+    return f"{first_four} {fifth_and_sixth}** **** {last_four}"
