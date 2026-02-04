@@ -23,7 +23,7 @@ def mask_account_card(info: str) -> str:
 
 def get_date(date_string: str) -> str:
     """
-    Преобразует дату из формата "2024-03-11T02:26:18.671407" в формат "ДД.ММ.ГГГГ".
+    Преобразует дату из формата "2025-03-11T02:26:18.671407" в формат "ДД.ММ.ГГГГ".
     """
     if not isinstance(date_string, str):
         raise ValueError("Дата должна быть строкой.")

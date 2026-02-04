@@ -2,6 +2,7 @@ from src.masks import get_mask_account, get_mask_card_number
 from src.widget import mask_account_card
 from src.widget import get_date
 
+
 def main():
     # Маскировка банковского счета
     account_number = "1234567890"
